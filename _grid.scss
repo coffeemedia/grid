@@ -16,6 +16,7 @@ $breakpoints: (
 $_column-min: 3;
 $_column-max: 12;
 $_gutter: 10px;
+$_ltr: true;
 
 
 
@@ -39,6 +40,7 @@ html {
   margin-left: auto;
   margin-right: auto;
   max-width: 1000px;
+  direction: if($_ltr, ltr, rtl);
 
   &:after {
     content: ' ';
@@ -48,13 +50,13 @@ html {
 
   > [class^='grid__col-'],
   > [class*=' grid__col-'] {
-    float: left;
+    float: if($_ltr, left, right);
     display: block;
     padding: 0 $_gutter;
     min-height: 1px;
 
     &:last-child {
-      float: right; 
+      float: if($_ltr, right, left);
     }
 
     .grid {
@@ -62,11 +64,11 @@ html {
     }
 
     &.grid__pull-left {
-      float: left;
+      float: if($_ltr, left, right);
     }
 
     &.grid__pull-right {
-      float: right;
+      float: if($_ltr, right, left);
     }
   }
 
@@ -90,7 +92,12 @@ html {
 
         // Enable offset
         > .grid__offset-#{$i}-#{$_breakpoint-name} {
-          margin-left: percentage($_width);
+          @if($_ltr) {
+            margin-left: percentage($_width);
+          }
+          @else {
+            margin-right: percentage($_width);
+          }
         }
       }
 
