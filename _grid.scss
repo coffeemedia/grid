@@ -52,7 +52,8 @@ html {
   > [class*=' grid__col-'] {
     float: if($_ltr, left, right);
     display: block;
-    padding: 0 $_gutter;
+    padding-right: $_gutter;
+    padding-left: $_gutter;
     min-height: 1px;
 
     &:last-child {
