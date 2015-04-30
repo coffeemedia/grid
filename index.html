@@ -16,26 +16,46 @@
 
     <link rel="stylesheet" type="text/css" href="grid.css" />
     <style type="text/css">
-      .grid {
-        background: #DDD;
+      @font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: local('Open Sans Light'), local('OpenSans-Light'), url(http://fonts.gstatic.com/s/opensans/v13/DXI1ORHCpsQm3Vp6mXoaTYnF5uFdDttMLvmWuJdhhgs.ttf) format('truetype');
       }
 
-      .grid .grid {
+      body {
+        font: 400 16px/1.35em "Open Sans",Helvetica,Verdana,Arial,sans-serif;
+        color: #FEFEFE;
+        background: #000;
+      }
+
+      ::selection {
+        color: #8d4604 !important;
+      }
+
+      .grid > [class^='grid__'] {
         background: #BBB;
       }
 
-      .grid .grid .grid {
+      .grid .grid > [class^='grid__'] {
         background: #999;
       }
 
+      .grid .grid .grid > [class^='grid__']{
+        background: #777;
+      }
+
       [class^='grid__'] {
-        border: 1px dotted #333;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border: 1px solid #FEFEFE;
+        border-radius: 10px 0 10px 0;
       }
     </style>
   </head>
 
   <body>
-    <div class="grid">
+    <div class="grid grid--rtl">
       <div class="grid__col-12">
         1. col-12
         <div class="grid">
