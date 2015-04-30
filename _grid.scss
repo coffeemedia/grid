@@ -1,0 +1,103 @@
+// -----------------------------
+// Var: Media Query Breakpoints
+// -----------------------------
+$breakpoints: (
+  xs: 480px,
+  sm: 768px,
+  md: 992px,
+  lg: 1200px
+);
+
+
+
+// -----------------------------
+// Var: Grid config
+// -----------------------------
+$_column-min: 3;
+$_column-max: 12;
+$_gutter: 10px;
+
+
+
+// -----------------------------
+// Base
+// -----------------------------
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+
+// -----------------------------
+// BEM: Grid
+// -----------------------------
+.grid {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+
+  &:after {
+    content: ' ';
+    display: block;
+    clear: both;
+  }
+
+  > [class^='grid__col-'],
+  > [class*=' grid__col-'] {
+    float: left;
+    display: block;
+    padding: 0 $_gutter;
+    min-height: 1px;
+
+    &:last-child {
+      float: right; 
+    }
+
+    .grid {
+      margin: 0 ($_gutter * -1);
+    }
+
+    &.grid__pull-left {
+      float: left;
+    }
+
+    &.grid__pull-right {
+      float: right;
+    }
+  }
+
+
+  @for $i from $_column-min through $_column-max {
+    $_width: ($i / $_column-max);
+    > .grid__col-#{$i} {
+      width: percentage($_width);
+    }
+  }
+
+  @each $_breakpoint-name, $_breakpoint-min-width in $breakpoints {
+    @media (min-width: $_breakpoint-min-width) {
+      @for $i from $_column-min through $_column-max {
+        $_width: ($i / $_column-max);
+        // Set stronger properties per column count for each breakpoint
+        // Make grid__col-6-sm win over grid__col-6-xs when needed
+        > .grid__col-#{$i}-#{$_breakpoint-name} {
+          width: percentage($_width);
+        }
+
+        // Enable offset
+        > .grid__offset-#{$i}-#{$_breakpoint-name} {
+          margin-left: percentage($_width);
+        }
+      }
+
+      // Make grid__hidden-* hide when needed
+      > .grid__hidden-#{$_breakpoint-name} {
+        display: none;
+      }
+    }
+  }
+}
